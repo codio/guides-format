@@ -35,7 +35,7 @@
 	"suppressPageNumbering": true,
 	// boolean, allow you to hide submit buttons for assessments, see submit option - https://docs.codio.com/instructors/authoring/assessments/student-submission.html#student-submission
 	"useSubmitButtons": true,
-	// boolean, allow you to hide "Mark as Complete" option for student, seesubmit options - https://docs.codio.com/instructors/authoring/assessments/student-submission.html#student-submission
+	// boolean, allow you to hide "Mark as Complete" option for student, see submit options - https://docs.codio.com/instructors/authoring/assessments/student-submission.html#student-submission
 	"useMarkAsComplete": true,
 	// boolean, allows you to hide the main Codio menu items in the IDE (Codio/Project/File/Edit etc) when the assignment is run in a course.
 	"hideMenu": true,
@@ -101,11 +101,11 @@ content can be `.md` or `.html`. Content type should be defined in the `.json` f
 	"title": "New Section",
 	// string, node type, can be 'page', 'section' or 'chapter'
 	"type": "section",
-	// array, pages/chapters/sections order on current level, should be omited for pages 
+	// array, pages/chapters/sections order on current level, should be omitted for pages 
 	"order": [
 		"New-Page-05b2"
 	],
-	// array, see files section
+	// array, see "Actions" section
 	"files": [
 		{
 			"path": "#tabs",
@@ -135,6 +135,222 @@ content can be `.md` or `.html`. Content type should be defined in the `.json` f
 	// boolean, when Close tabs enabled, allows you the option to retain terminal session from previous section. By default, terminal session will close
 	"closeTerminalSession": true,
 	// string, allows you to define learning objectives for this section
-	"learningObjectives": "some text"
+	"learningObjectives": "some text",
+	// media element, allows you to define audio element and audio action for the page
+	"media": {
+		// media element type. can be "audio"
+		"type": "audio",
+		// string, media element name
+		"name": "test audio",
+		// string, path to audio file
+		"source": "file_example_MP3_1MG.mp3",
+		// boolean, you to enable/disable the page audio element 
+		"disabled": true,
+		// array, see "Media Actions" section
+		"actions": [
+			{
+				"action": "open",
+				"tabType": "file",
+				"time": 8,
+				"type": "file_open",
+				"content": "test.js",
+				"panel": 0,
+				"lines": null
+			},
+		]
+	}
+
+}
+```
+
+## Actions
+https://docs.codio.com/instructors/authoring/guides/settings/opentabs.html
+
+### Close all tabs
+```
+{
+	"path": "#tabs",
+	"action": "close"
+}
+```
+
+### Open file
+```
+{
+	"path": "test.js", // string, file path to open
+	"panel": 0, // number, panel index to open
+	"action": "open"
+},
+```
+
+### Open preview
+```
+{
+	"path": "#preview: https://google.com",
+	"panel": 0, // number, panel index to open
+	"action": "open"
+},
+```
+
+### Open terminal window and run command(optionally)
+```
+{
+	"path": "#terminal: ls", // string, "#terminal: {command_to_run}"
+	"panel": 0, // number, panel index to open
+	"action": "open"
+},
+```
+
+### Open file and highlight text
+```
+{
+	"path": "test.js", // string, file path to open
+	"panel": 0, // number, panel index to open
+	"ref": "some marker text", // string, first line to highlight reference
+	"lineCount": 3, // number, lines count to highlight
+	"action": "open"
+},
+```
+
+### Open visualizer (PythonTutor)
+```
+{
+	"path": "#tutor: test.js", // string, file path to open, "#tutor: {path}"
+	"panel": 0, // number, panel index to open
+	"action": "open"
+},
+```
+
+### Open VM (VM or VM SSH)
+vm: 
+```
+{
+	"path": "#vm: ",
+	"panel": 0, // number, panel index to open
+	"action": "open"
+},
+```
+vm ssh:
+```
+{
+	"path": "#vmssh: ",
+	"panel": 0, // number, panel index to open
+	"action": "open"
+},
+```
+
+### Cyber Range
+```
+{
+	"path": "#vmnested: KaliLinux", // string, "#vmnested: {target_machine}"
+	"panel": 0, // number, panel index to open
+	"action": "open"
+},
+```
+### Open earsketch
+```
+{
+	"path": "#earsketch: sample.py", // string, "#earsketch: {path}"
+	"panel": 0, // number, panel index to open
+	"action": "open"
+},
+```
+### Open jupyter
+```
+{
+	"path": "#jupyter-lab: test.ipynb", // string, "#jupyter-lab: {path}"
+	"panel": 0, // number, panel index to open
+	"action": "open"
+}
+```
+
+## Media Actions
+
+### Open/Close file
+
+open:
+```
+{
+	"action": "open",
+	"tabType": "file",
+	"time": 8, // number, start action time in seconds
+	"type": "file_open",
+	"content": "test.js", // string, file path to open
+	"panel": 0, // number, panel index to open
+},
+```
+
+close:
+```
+{
+	"action": "close",
+	"tabType": "file",
+	"time": 12, // number, start action time in seconds
+	"type": "file_close",
+	"content": "test.js", // string, file path to close
+	"panel": 0 // number, panel index to close
+},
+```
+
+### Open/Close terminal and run command
+
+open: 
+```
+{
+	"action": "open",
+	"tabType": "terminal",
+	"time": 13, // number, start action time in seconds
+	"type": "terminal_open",
+	"panel": 0 // number, panel index to open
+},
+```
+close:
+```
+{
+	"action": "close",
+	"tabType": "terminal",
+	"time": 13, // number, start action time in seconds
+	"type": "terminal_close"
+},
+```
+run command:
+```
+{
+	"action": "open",
+	"tabType": "terminal",
+	"time": 14, // number, start action time in seconds
+	"type": "run_command",
+	"content": "ls", // string, command to run
+	"panel": 1 // number, panel index to open
+},
+```
+
+### Highlight code
+```
+{
+	"action": "open",
+	"tabType": "file",
+	"time": 46, // number, start action time in seconds
+	"type": "highlight",
+	"content": "test.js", // string, file path to open
+	"panel": 0, // number, panel index to open
+	"reference": "line 1", // string, first line to highlight reference
+	"lines": 3 // number, lines count to highlight
+},
+```
+
+### Close all tabs
+```
+{
+	"time": 47, // number, start action time in seconds
+	"type": "close_all"
+},
+```
+
+### Pause
+```
+			{
+	"time": 58, // number, start action time in seconds
+	"type": "pause"
 }
 ```
